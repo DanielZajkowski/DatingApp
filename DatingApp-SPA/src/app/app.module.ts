@@ -12,6 +12,8 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { FileUploadModule } from 'ng2-file-upload';
 import { TimeagoModule } from 'ngx-timeago';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 import { NavComponent } from './nav/nav.component';
 import { from } from 'rxjs';
@@ -58,7 +60,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
     MemberCardComponent,
     MemberDetailComponent,
     MemberEditComponent,
-    PhotoEditorComponent
+    PhotoEditorComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,14 +74,16 @@ export class CustomHammerConfig extends HammerGestureConfig {
     RouterModule.forRoot(appRoutes),
     NgxGalleryModule,
     TimeagoModule.forRoot(),
+    PaginationModule.forRoot(),
+    ButtonsModule.forRoot(),
     FileUploadModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
         whitelistedDomains: ['localhost:5000'],
-        blacklistedRoutes: ['localhost:5000/api/auth']
-      }
-    })
+        blacklistedRoutes: ['localhost:5000/api/auth'],
+      },
+    }),
   ],
   providers: [
     AuthService,
@@ -91,7 +95,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
     MemberListResolver,
     { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig },
     MemberEditResolver,
-    PreventUnsavedChanges
+    PreventUnsavedChanges,
   ],
   bootstrap: [AppComponent],
 })
