@@ -14,7 +14,6 @@ using Microsoft.Extensions.Options;
 
 namespace DatingApp.API.Controllers
 {
-    [Authorize]
     [Route("api/users/{userId}/photos")]
     [ApiController]
     public class PhotosController : ControllerBase
@@ -53,7 +52,7 @@ namespace DatingApp.API.Controllers
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var userFromRepo = await _repo.GetUser(userId); // storing user from repo
+            var userFromRepo = await _repo.GetUser(userId, true); // storing user from repo
             var file = photoForCreationDto.File;            // information about the file
             var uploadResult = new ImageUploadResult();     // var of type an instance of image results, one of cloudinary classes
 
@@ -100,7 +99,7 @@ namespace DatingApp.API.Controllers
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var userFromRepo = await _repo.GetUser(userId);
+            var userFromRepo = await _repo.GetUser(userId, true);
 
             // check if there is photo in collection
             if(!userFromRepo.Photos.Any(p => p.Id == id))
@@ -128,7 +127,7 @@ namespace DatingApp.API.Controllers
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var userFromRepo = await _repo.GetUser(userId);
+            var userFromRepo = await _repo.GetUser(userId, true);
 
             if (!userFromRepo.Photos.Any(p => p.Id == id))
                 return Unauthorized();
